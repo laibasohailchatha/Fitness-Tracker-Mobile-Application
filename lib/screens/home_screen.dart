@@ -6,6 +6,7 @@ import '../widgets/activity_progress_card.dart';
 import '../widgets/quick_actions_row.dart';
 import '../widgets/todays_workout_card.dart';
 import 'workout_categories_screen.dart';
+import 'water_tracker_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -69,7 +70,14 @@ class _HomeScreenState extends State<HomeScreen> {
               QuickActionsRow(
                 onWorkoutTap: () => _onNavTap(1),
                 onTimerTap: () => _onNavTap(2),
-                onWaterTap: () {},
+                onWaterTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const WaterTrackerScreen(),
+                    ),
+                  );
+                },
                 onProgressTap: () => _onNavTap(3),
               ),
               const SizedBox(height: 28),

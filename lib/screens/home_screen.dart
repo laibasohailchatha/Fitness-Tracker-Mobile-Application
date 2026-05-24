@@ -5,6 +5,7 @@ import '../widgets/bottom_nav_bar.dart';
 import '../widgets/activity_progress_card.dart';
 import '../widgets/quick_actions_row.dart';
 import '../widgets/todays_workout_card.dart';
+import 'workout_categories_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -32,6 +33,14 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _currentNavIndex = index;
     });
+    if (index == 1) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const WorkoutCategoriesScreen(),
+        ),
+      );
+    }
   }
 
   @override

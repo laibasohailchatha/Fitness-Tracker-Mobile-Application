@@ -39,21 +39,14 @@ class _WaterTrackerScreenState extends State<WaterTrackerScreen> {
             children: [
               // Top bar
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: const Icon(Icons.arrow_back, color: Colors.white),
-                  ),
-                  const Expanded(
-                    child: Center(
-                      child: Text(
-                        'Water Tracker',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                  const Text(
+                    'Water Tracker',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                   const Icon(Icons.more_vert, color: Colors.white54),

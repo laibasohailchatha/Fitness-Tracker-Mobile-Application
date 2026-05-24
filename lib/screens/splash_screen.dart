@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import '../utils/app_colors.dart';
 import '../utils/app_constants.dart';
-import 'home_screen.dart';
+import 'main_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -44,7 +44,7 @@ class _SplashScreenState extends State<SplashScreen>
     Timer(Duration(seconds: AppConstants.splashDuration), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        MaterialPageRoute(builder: (context) => const MainScreen()),
       );
     });
   }
@@ -66,7 +66,7 @@ class _SplashScreenState extends State<SplashScreen>
           // Background color
           Image.asset(
             'assets/images/splash_bg.png',
-            fit: BoxFit.contain,
+            fit: BoxFit.fitWidth,
             color: Colors.black.withOpacity(0.65),
             colorBlendMode: BlendMode.darken,
           ),

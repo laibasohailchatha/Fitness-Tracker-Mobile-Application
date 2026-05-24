@@ -1,24 +1,19 @@
 import 'package:flutter/material.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_constants.dart';
-import '../widgets/bottom_nav_bar.dart';
 import '../widgets/activity_progress_card.dart';
 import '../widgets/quick_actions_row.dart';
 import '../widgets/todays_workout_card.dart';
 import 'workout_categories_screen.dart';
-import 'water_tracker_screen.dart';
-import 'progress_screen.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeTab extends StatefulWidget {
+  const HomeTab({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeTab> createState() => _HomeTabState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
-  int _currentNavIndex = 0;
-
+class _HomeTabState extends State<HomeTab> {
   final int _calories = 520;
   final int _workoutMinutes = 45;
   final int _steps = 6432;
@@ -29,25 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
     double workoutPercent = _workoutMinutes / AppConstants.dailyWorkoutMinutes;
     double avg = (calPercent + stepPercent + workoutPercent) / 3;
     return avg.clamp(0.0, 1.0);
-  }
-
-  void _onNavTap(int index) {
-    setState(() {
-      _currentNavIndex = index;
-    });
-    if (index == 1) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const WorkoutCategoriesScreen(),
-        ),
-      );
-    } else if (index == 3) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const ProgressScreen()),
-      );
-    }
   }
 
   @override
@@ -61,8 +37,13 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
+
+              // Top bar
               _buildTopBar(),
+
               const SizedBox(height: 24),
+
+              // Activity progress
               ActivityProgressCard(
                 percentage: _activityPercentage,
                 calories: _calories,
@@ -72,35 +53,58 @@ class _HomeScreenState extends State<HomeScreen> {
                 steps: _steps,
                 stepGoal: AppConstants.dailyStepGoal,
               ),
+
               const SizedBox(height: 28),
+
+              // Quick actions
               QuickActionsRow(
-                onWorkoutTap: () => _onNavTap(1),
-                onTimerTap: () => _onNavTap(2),
-                onWaterTap: () {
+                onWorkoutTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const WaterTrackerScreen(),
+                      builder: (context) => const WorkoutCategoriesScreen(),
                     ),
                   );
                 },
-                onProgressTap: () => _onNavTap(3),
+                onTimerTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const WorkoutCategoriesScreen(),
+                    ),
+                  );
+                },
+                onWaterTap: () {
+                  // Water tab is index 2 in bottom nav
+                  // This is handled by MainScreen
+                },
+                onProgressTap: () {
+                  // Progress tab is index 3 in bottom nav
+                  // This is handled by MainScreen
+                },
               ),
+
               const SizedBox(height: 28),
+
+              // Today's workout
               TodaysWorkoutCard(
                 workoutName: 'Full Body Burn',
                 difficulty: 'Intermediate',
                 durationMinutes: 35,
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const WorkoutCategoriesScreen(),
+                    ),
+                  );
+                },
               ),
+
               const SizedBox(height: 20),
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: BottomNavBar(
-        currentIndex: _currentNavIndex,
-        onTap: _onNavTap,
       ),
     );
   }
@@ -113,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Hi, Laiba! 👋',
+              'Hi, Ayush! 👋',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 24,

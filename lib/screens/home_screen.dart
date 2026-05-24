@@ -7,6 +7,7 @@ import '../widgets/quick_actions_row.dart';
 import '../widgets/todays_workout_card.dart';
 import 'workout_categories_screen.dart';
 import 'water_tracker_screen.dart';
+import 'progress_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -40,6 +41,11 @@ class _HomeScreenState extends State<HomeScreen> {
         MaterialPageRoute(
           builder: (context) => const WorkoutCategoriesScreen(),
         ),
+      );
+    } else if (index == 3) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const ProgressScreen()),
       );
     }
   }

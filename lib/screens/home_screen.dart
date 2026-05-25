@@ -5,6 +5,7 @@ import '../widgets/activity_progress_card.dart';
 import '../widgets/quick_actions_row.dart';
 import '../widgets/todays_workout_card.dart';
 import 'workout_categories_screen.dart';
+import '../widgets/motivational_banner.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
@@ -26,6 +27,17 @@ class _HomeTabState extends State<HomeTab> {
     return avg.clamp(0.0, 1.0);
   }
 
+  String _getGreeting() {
+    final hour = DateTime.now().hour;
+    if (hour < 12) {
+      return 'Good Morning! 🌅';
+    } else if (hour < 17) {
+      return 'Good Afternoon! ☀️';
+    } else {
+      return 'Good Evening! 🌙';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,6 +52,11 @@ class _HomeTabState extends State<HomeTab> {
 
               // Top bar
               _buildTopBar(),
+
+              const SizedBox(height: 16),
+
+              // Motivational banner
+              const MotivationalBanner(),
 
               const SizedBox(height: 24),
 
@@ -116,9 +133,9 @@ class _HomeTabState extends State<HomeTab> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Hi, Ayush! 👋',
-              style: TextStyle(
+            Text(
+              _getGreeting(),
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,

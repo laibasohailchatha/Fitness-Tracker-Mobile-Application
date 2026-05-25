@@ -46,9 +46,9 @@ class BottomNavBar extends StatelessWidget {
             label: 'Workouts',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.timer_outlined),
-            activeIcon: Icon(Icons.timer),
-            label: 'Timer',
+            icon: Icon(Icons.water_drop_outlined),
+            activeIcon: Icon(Icons.water_drop),
+            label: 'Water Tracker',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.bar_chart_outlined),

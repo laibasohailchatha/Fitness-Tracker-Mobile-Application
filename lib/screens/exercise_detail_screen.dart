@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../models/workout_model.dart';
 import '../utils/app_colors.dart';
 import 'workout_timer_screen.dart';
+import '../utils/page_transitions.dart';
 
 class ExerciseDetailScreen extends StatelessWidget {
   final WorkoutModel workout;
@@ -187,9 +188,8 @@ class ExerciseDetailScreen extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                WorkoutTimerScreen(workout: workout),
+                          SlidePageRoute(
+                            page: WorkoutTimerScreen(workout: workout),
                           ),
                         );
                       },

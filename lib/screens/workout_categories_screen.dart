@@ -4,6 +4,7 @@ import '../utils/workout_data.dart';
 import '../models/workout_model.dart';
 import '../widgets/workout_card.dart';
 import 'exercise_detail_screen.dart';
+import '../utils/page_transitions.dart';
 
 class WorkoutCategoriesScreen extends StatefulWidget {
   const WorkoutCategoriesScreen({super.key});
@@ -124,9 +125,8 @@ class _WorkoutCategoriesScreenState extends State<WorkoutCategoriesScreen> {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              ExerciseDetailScreen(workout: workout),
+                        SlidePageRoute(
+                          page: ExerciseDetailScreen(workout: workout),
                         ),
                       );
                     },

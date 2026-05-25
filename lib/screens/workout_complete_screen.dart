@@ -1,0 +1,167 @@
+import 'package:flutter/material.dart';
+import '../utils/app_colors.dart';
+import '../models/workout_model.dart';
+import 'main_screen.dart';
+
+class WorkoutCompleteScreen extends StatelessWidget {
+  final WorkoutModel workout;
+  final int caloriesBurned;
+  final int elapsedSeconds;
+
+  const WorkoutCompleteScreen({
+    super.key,
+    required this.workout,
+    required this.caloriesBurned,
+    required this.elapsedSeconds,
+  });
+
+  String _formatTime(int seconds) {
+    final mins = (seconds ~/ 60).toString().padLeft(2, '0');
+    final secs = (seconds % 60).toString().padLeft(2, '0');
+    return '$mins:$secs';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Trophy icon
+              Container(
+                width: 120,
+                height: 120,
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withOpacity(0.15),
+                  shape: BoxShape.circle,
+                  border: Border.all(color: AppColors.primary, width: 2),
+                ),
+                child: const Icon(
+                  Icons.emoji_events,
+                  color: AppColors.yellow,
+                  size: 60,
+                ),
+              ),
+
+              const SizedBox(height: 28),
+
+              const Text(
+                'Workout Complete!',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
+              const SizedBox(height: 8),
+
+              Text(
+                workout.name,
+                style: const TextStyle(color: Colors.white54, fontSize: 16),
+              ),
+
+              const SizedBox(height: 40),
+
+              // Stats row
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _buildStat(
+                    icon: Icons.local_fire_department,
+                    color: AppColors.orange,
+                    value: '$caloriesBurned',
+                    label: 'Calories',
+                  ),
+                  _buildStat(
+                    icon: Icons.access_time,
+                    color: AppColors.primary,
+                    value: _formatTime(elapsedSeconds),
+                    label: 'Duration',
+                  ),
+                  _buildStat(
+                    icon: Icons.fitness_center,
+                    color: AppColors.green,
+                    value: '${workout.exercises.length}',
+                    label: 'Exercises',
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 48),
+
+              // Back to home button
+              SizedBox(
+                width: double.infinity,
+                height: 56,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MainScreen(),
+                      ),
+                      (route) => false,
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  child: const Text(
+                    'Back to Home',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStat({
+    required IconData icon,
+    required Color color,
+    required String value,
+    required String label,
+  }) {
+    return Column(
+      children: [
+        Container(
+          width: 64,
+          height: 64,
+          decoration: BoxDecoration(
+            color: color.withOpacity(0.15),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Icon(icon, color: color, size: 28),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          value,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          label,
+          style: const TextStyle(color: Colors.white54, fontSize: 12),
+        ),
+      ],
+    );
+  }
+}

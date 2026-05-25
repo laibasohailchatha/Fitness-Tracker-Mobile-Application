@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import '../models/workout_model.dart';
 import '../utils/app_colors.dart';
+import 'workout_complete_screen.dart';
 
 class WorkoutTimerScreen extends StatefulWidget {
   final WorkoutModel workout;
@@ -79,6 +80,17 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
         _isRunning = false;
         _elapsedSeconds = 0;
       });
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => WorkoutCompleteScreen(
+            workout: widget.workout,
+            caloriesBurned: _caloriesBurned,
+            elapsedSeconds: _elapsedSeconds,
+          ),
+        ),
+      );
     }
   }
 

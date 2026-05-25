@@ -36,14 +36,44 @@ class ExerciseDetailScreen extends StatelessWidget {
           // Top image area
           Stack(
             children: [
+              ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(0),
+                  bottomRight: Radius.circular(0),
+                ),
+                child: Image.asset(
+                  workout.imagePath,
+                  width: double.infinity,
+                  height: 280,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      width: double.infinity,
+                      height: 280,
+                      color: color.withOpacity(0.15),
+                      child: Icon(
+                        Icons.fitness_center,
+                        size: 120,
+                        color: color.withOpacity(0.4),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              // Dark overlay so back button is visible
               Container(
                 width: double.infinity,
                 height: 280,
-                decoration: BoxDecoration(color: color.withOpacity(0.15)),
-                child: Icon(
-                  Icons.fitness_center,
-                  size: 120,
-                  color: color.withOpacity(0.4),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.black.withOpacity(0.4),
+                      Colors.transparent,
+                      Colors.black.withOpacity(0.6),
+                    ],
+                  ),
                 ),
               ),
 

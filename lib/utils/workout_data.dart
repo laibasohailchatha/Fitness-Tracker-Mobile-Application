@@ -10,6 +10,7 @@ class WorkoutData {
         difficulty: 'Intermediate',
         durationMinutes: 35,
         exerciseCount: 6,
+        imagePath: 'assets/images/workout_fullbody.jpg',
         description:
             'A complete full body workout targeting all major muscle groups. Perfect for building strength and endurance.',
         exercises: [
@@ -47,6 +48,7 @@ class WorkoutData {
         difficulty: 'Advanced',
         durationMinutes: 40,
         exerciseCount: 8,
+        imagePath: 'assets/images/workout_upperbody.jpg',
         description:
             'Intense upper body workout focusing on chest, back, shoulders and arms.',
         exercises: [
@@ -76,6 +78,7 @@ class WorkoutData {
         difficulty: 'Intermediate',
         durationMinutes: 30,
         exerciseCount: 5,
+        imagePath: 'assets/images/workout_lowerbody.jpg',
         description: 'Targeted lower body workout for strong legs and glutes.',
         exercises: [
           ExerciseModel(
@@ -103,6 +106,7 @@ class WorkoutData {
         difficulty: 'Beginner',
         durationMinutes: 25,
         exerciseCount: 6,
+        imagePath: 'assets/images/workout_cardio.jpg',
         description:
             'High energy cardio session to boost heart rate and burn calories fast.',
         exercises: [
@@ -131,6 +135,7 @@ class WorkoutData {
         difficulty: 'Advanced',
         durationMinutes: 20,
         exerciseCount: 8,
+        imagePath: 'assets/images/workout_hiit.jpg',
         description:
             'High intensity interval training for maximum calorie burn in minimum time.',
         exercises: [
@@ -159,6 +164,7 @@ class WorkoutData {
         difficulty: 'Beginner',
         durationMinutes: 30,
         exerciseCount: 10,
+        imagePath: 'assets/images/workout_yoga.jpg',
         description:
             'Gentle morning yoga flow to wake up the body and improve flexibility.',
         exercises: [

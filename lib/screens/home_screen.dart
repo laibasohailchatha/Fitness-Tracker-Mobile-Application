@@ -108,6 +108,7 @@ class _HomeTabState extends State<HomeTab> {
                 workoutName: 'Full Body Burn',
                 difficulty: 'Intermediate',
                 durationMinutes: 35,
+                imagePath: 'assets/images/workout_fullbody.jpg',
                 onTap: () {
                   Navigator.push(
                     context,

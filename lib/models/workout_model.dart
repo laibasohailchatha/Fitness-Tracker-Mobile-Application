@@ -7,6 +7,7 @@ class WorkoutModel {
   final int exerciseCount;
   final String description;
   final List<ExerciseModel> exercises;
+  final String imagePath;
 
   WorkoutModel({
     required this.id,
@@ -17,6 +18,7 @@ class WorkoutModel {
     required this.exerciseCount,
     required this.description,
     required this.exercises,
+    required this.imagePath,
   });
 }
 

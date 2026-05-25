@@ -23,21 +23,6 @@ class WorkoutCard extends StatelessWidget {
     }
   }
 
-  IconData _getCategoryIcon(String category) {
-    switch (category) {
-      case 'Strength':
-        return Icons.fitness_center;
-      case 'Cardio':
-        return Icons.directions_run;
-      case 'HIIT':
-        return Icons.local_fire_department;
-      case 'Yoga':
-        return Icons.self_improvement;
-      default:
-        return Icons.fitness_center;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final color = _getCategoryColor(workout.category);
@@ -46,36 +31,42 @@ class WorkoutCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         margin: const EdgeInsets.only(bottom: 16),
+        height: 110,
         decoration: BoxDecoration(
           color: AppColors.cardBackground,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Row(
           children: [
-            // Left color bar + icon
-            Container(
-              width: 90,
-              height: 100,
-              decoration: BoxDecoration(
-                color: color.withOpacity(0.15),
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  bottomLeft: Radius.circular(20),
-                ),
+            // Left image
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(20),
+                bottomLeft: Radius.circular(20),
               ),
-              child: Icon(
-                _getCategoryIcon(workout.category),
-                color: color,
-                size: 40,
+              child: Image.asset(
+                workout.imagePath,
+                width: 110,
+                height: 110,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    width: 110,
+                    height: 110,
+                    color: color.withOpacity(0.15),
+                    child: Icon(Icons.fitness_center, color: color, size: 40),
+                  );
+                },
               ),
             ),
 
             // Workout info
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(14),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       workout.name,
@@ -88,7 +79,7 @@ class WorkoutCard extends StatelessWidget {
                     const SizedBox(height: 6),
                     Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.fitness_center,
                           color: Colors.white54,
                           size: 13,

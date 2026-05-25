@@ -16,13 +16,6 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 
-  final List<Widget> _screens = [
-    const HomeTab(),
-    const WorkoutCategoriesScreen(),
-    const WaterTrackerScreen(),
-    const ProgressScreen(),
-  ];
-
   void _onNavTap(int index) {
     setState(() {
       _currentIndex = index;
@@ -31,9 +24,16 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> screens = [
+      HomeTab(onSwitchTab: _onNavTap),
+      const WorkoutCategoriesScreen(),
+      const WaterTrackerScreen(),
+      const ProgressScreen(),
+    ];
+
     return Scaffold(
       backgroundColor: AppColors.background,
-      body: IndexedStack(index: _currentIndex, children: _screens),
+      body: IndexedStack(index: _currentIndex, children: screens),
       bottomNavigationBar: BottomNavBar(
         currentIndex: _currentIndex,
         onTap: _onNavTap,

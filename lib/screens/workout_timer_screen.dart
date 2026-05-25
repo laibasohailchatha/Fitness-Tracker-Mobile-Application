@@ -44,7 +44,9 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
       if (_remainingSeconds > 0) {
         setState(() {
           _remainingSeconds--;
-          _caloriesBurned++;
+          if (_remainingSeconds % 5 == 0) {
+            _caloriesBurned++;
+          }
         });
       } else {
         t.cancel();
@@ -285,9 +287,9 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
                   ),
                   _buildStatItem(
                     label: 'Calories',
-                    value: '$_caloriesBurned kcal',
+                    value: '$_caloriesBurned cal',
                   ),
-                  _buildStatItem(label: 'Heart Rate', value: '128 bpm'),
+                  _buildStatItem(label: 'Heart Rate', value: '78 bpm'),
                 ],
               ),
             ),

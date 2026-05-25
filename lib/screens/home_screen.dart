@@ -4,11 +4,12 @@ import '../utils/app_constants.dart';
 import '../widgets/activity_progress_card.dart';
 import '../widgets/quick_actions_row.dart';
 import '../widgets/todays_workout_card.dart';
-import 'workout_categories_screen.dart';
 import '../widgets/motivational_banner.dart';
 
 class HomeTab extends StatefulWidget {
-  const HomeTab({super.key});
+  final Function(int) onSwitchTab;
+
+  const HomeTab({super.key, required this.onSwitchTab});
 
   @override
   State<HomeTab> createState() => _HomeTabState();
@@ -73,32 +74,12 @@ class _HomeTabState extends State<HomeTab> {
 
               const SizedBox(height: 28),
 
-              // Quick actions
+              // Quick actions — now switch tabs instead of pushing screens
               QuickActionsRow(
-                onWorkoutTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const WorkoutCategoriesScreen(),
-                    ),
-                  );
-                },
-                onTimerTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const WorkoutCategoriesScreen(),
-                    ),
-                  );
-                },
-                onWaterTap: () {
-                  // Water tab is index 2 in bottom nav
-                  // This is handled by MainScreen
-                },
-                onProgressTap: () {
-                  // Progress tab is index 3 in bottom nav
-                  // This is handled by MainScreen
-                },
+                onWorkoutTap: () => widget.onSwitchTab(1),
+                onTimerTap: () => widget.onSwitchTab(1),
+                onWaterTap: () => widget.onSwitchTab(2),
+                onProgressTap: () => widget.onSwitchTab(3),
               ),
 
               const SizedBox(height: 28),
@@ -109,14 +90,7 @@ class _HomeTabState extends State<HomeTab> {
                 difficulty: 'Intermediate',
                 durationMinutes: 35,
                 imagePath: 'assets/images/workout_fullbody.jpg',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const WorkoutCategoriesScreen(),
-                    ),
-                  );
-                },
+                onTap: () => widget.onSwitchTab(1),
               ),
 
               const SizedBox(height: 20),

@@ -5,6 +5,9 @@ import '../models/workout_model.dart';
 import '../widgets/workout_card.dart';
 import 'exercise_detail_screen.dart';
 import '../utils/page_transitions.dart';
+import 'package:provider/provider.dart';
+import '../utils/theme_provider.dart';
+import '../utils/theme_colors.dart';
 
 class WorkoutCategoriesScreen extends StatefulWidget {
   const WorkoutCategoriesScreen({super.key});
@@ -34,7 +37,7 @@ class _WorkoutCategoriesScreenState extends State<WorkoutCategoriesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: TC.background(context),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,10 +48,10 @@ class _WorkoutCategoriesScreenState extends State<WorkoutCategoriesScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     'Workouts',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: TC.textPrimary(context),
                       fontSize: 28,
                       fontWeight: FontWeight.bold,
                     ),
@@ -57,7 +60,7 @@ class _WorkoutCategoriesScreenState extends State<WorkoutCategoriesScreen> {
                   Text(
                     'Choose your workout plan',
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.5),
+                      color: TC.textMuted(context),
                       fontSize: 14,
                     ),
                   ),
@@ -91,14 +94,16 @@ class _WorkoutCategoriesScreenState extends State<WorkoutCategoriesScreen> {
                       ),
                       decoration: BoxDecoration(
                         color: isSelected
-                            ? AppColors.primary
-                            : AppColors.cardBackground,
+                            ? TC.primary(context)
+                            : TC.card(context),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: Text(
                         category,
                         style: TextStyle(
-                          color: isSelected ? Colors.white : Colors.white54,
+                          color: isSelected
+                              ? Colors.white
+                              : TC.textMuted(context),
                           fontSize: 14,
                           fontWeight: isSelected
                               ? FontWeight.w600

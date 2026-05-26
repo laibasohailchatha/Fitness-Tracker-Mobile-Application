@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import '../utils/app_colors.dart';
 import '../models/workout_model.dart';
 import 'main_screen.dart';
+import 'package:provider/provider.dart';
+import '../utils/theme_provider.dart';
+import '../utils/theme_colors.dart';
 
 class WorkoutCompleteScreen extends StatelessWidget {
   final WorkoutModel workout;
@@ -24,7 +27,7 @@ class WorkoutCompleteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: TC.background(context),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(24),
@@ -49,10 +52,10 @@ class WorkoutCompleteScreen extends StatelessWidget {
 
               const SizedBox(height: 28),
 
-              const Text(
+              Text(
                 'Workout Complete!',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: TC.textPrimary(context),
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                 ),
@@ -62,7 +65,7 @@ class WorkoutCompleteScreen extends StatelessWidget {
 
               Text(
                 workout.name,
-                style: const TextStyle(color: Colors.white54, fontSize: 16),
+                style: TextStyle(color: TC.textMuted(context), fontSize: 16),
               ),
 
               const SizedBox(height: 40),
@@ -72,18 +75,21 @@ class WorkoutCompleteScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   _buildStat(
+                    context: context,
                     icon: Icons.local_fire_department,
                     color: AppColors.orange,
                     value: '$caloriesBurned',
                     label: 'Calories',
                   ),
                   _buildStat(
+                    context: context,
                     icon: Icons.access_time,
                     color: AppColors.primary,
                     value: _formatTime(elapsedSeconds),
                     label: 'Duration',
                   ),
                   _buildStat(
+                    context: context,
                     icon: Icons.fitness_center,
                     color: AppColors.green,
                     value: '${workout.exercises.length}',
@@ -132,6 +138,7 @@ class WorkoutCompleteScreen extends StatelessWidget {
   }
 
   Widget _buildStat({
+    required BuildContext context,
     required IconData icon,
     required Color color,
     required String value,
@@ -151,15 +158,15 @@ class WorkoutCompleteScreen extends StatelessWidget {
         const SizedBox(height: 10),
         Text(
           value,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: TC.textPrimary(context),
             fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
         ),
         Text(
           label,
-          style: const TextStyle(color: Colors.white54, fontSize: 12),
+          style: TextStyle(color: TC.textMuted(context), fontSize: 12),
         ),
       ],
     );

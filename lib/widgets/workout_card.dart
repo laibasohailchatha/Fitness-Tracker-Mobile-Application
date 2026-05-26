@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../models/workout_model.dart';
 import '../utils/app_colors.dart';
+import 'package:provider/provider.dart';
+import '../utils/theme_provider.dart';
+import '../utils/theme_colors.dart';
 
 class WorkoutCard extends StatelessWidget {
   final WorkoutModel workout;
@@ -33,7 +36,7 @@ class WorkoutCard extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 16),
         height: 110,
         decoration: BoxDecoration(
-          color: AppColors.cardBackground,
+          color: TC.card(context),
           borderRadius: BorderRadius.circular(20),
         ),
         child: Row(
@@ -70,8 +73,8 @@ class WorkoutCard extends StatelessWidget {
                   children: [
                     Text(
                       workout.name,
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: TC.textPrimary(context),
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
@@ -87,8 +90,8 @@ class WorkoutCard extends StatelessWidget {
                         const SizedBox(width: 4),
                         Text(
                           '${workout.exerciseCount} Exercises',
-                          style: const TextStyle(
-                            color: Colors.white54,
+                          style: TextStyle(
+                            color: TC.textMuted(context),
                             fontSize: 12,
                           ),
                         ),
@@ -101,8 +104,8 @@ class WorkoutCard extends StatelessWidget {
                         const SizedBox(width: 4),
                         Text(
                           '${workout.durationMinutes} min',
-                          style: const TextStyle(
-                            color: Colors.white54,
+                          style: TextStyle(
+                            color: TC.textMuted(context),
                             fontSize: 12,
                           ),
                         ),

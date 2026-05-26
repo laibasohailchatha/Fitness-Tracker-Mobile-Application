@@ -3,6 +3,9 @@ import '../models/workout_model.dart';
 import '../utils/app_colors.dart';
 import 'workout_timer_screen.dart';
 import '../utils/page_transitions.dart';
+import 'package:provider/provider.dart';
+import '../utils/theme_provider.dart';
+import '../utils/theme_colors.dart';
 
 class ExerciseDetailScreen extends StatelessWidget {
   final WorkoutModel workout;
@@ -30,7 +33,7 @@ class ExerciseDetailScreen extends StatelessWidget {
     final color = _getCategoryColor(workout.category);
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: TC.background(context),
       body: Column(
         children: [
           // Top image area
@@ -130,8 +133,8 @@ class ExerciseDetailScreen extends StatelessWidget {
                   // Title and tags
                   Text(
                     exercise.name,
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: TC.textPrimary(context),
                       fontSize: 26,
                       fontWeight: FontWeight.bold,
                     ),
@@ -152,8 +155,8 @@ class ExerciseDetailScreen extends StatelessWidget {
                   // Description
                   Text(
                     exercise.description,
-                    style: const TextStyle(
-                      color: Colors.white60,
+                    style: TextStyle(
+                      color: TC.textMuted(context),
                       fontSize: 14,
                       height: 1.6,
                     ),
@@ -166,6 +169,7 @@ class ExerciseDetailScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: _buildStatCard(
+                          context: context,
                           icon: Icons.repeat,
                           label: 'Sets',
                           value: '${exercise.sets} Sets',
@@ -174,6 +178,7 @@ class ExerciseDetailScreen extends StatelessWidget {
                       const SizedBox(width: 12),
                       Expanded(
                         child: _buildStatCard(
+                          context: context,
                           icon: Icons.fitness_center,
                           label: 'Reps',
                           value: '${exercise.reps} Reps',
@@ -182,6 +187,7 @@ class ExerciseDetailScreen extends StatelessWidget {
                       const SizedBox(width: 12),
                       Expanded(
                         child: _buildStatCard(
+                          context: context,
                           icon: Icons.timer,
                           label: 'Rest',
                           value: '${exercise.restSeconds} sec',
@@ -193,10 +199,10 @@ class ExerciseDetailScreen extends StatelessWidget {
                   const SizedBox(height: 24),
 
                   // All exercises in this workout
-                  const Text(
+                  Text(
                     'Exercises in this workout',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: TC.textPrimary(context),
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
@@ -205,7 +211,7 @@ class ExerciseDetailScreen extends StatelessWidget {
                   const SizedBox(height: 12),
 
                   ...workout.exercises.map(
-                    (ex) => _buildExerciseRow(ex, color),
+                    (ex) => _buildExerciseRow(context, ex, color),
                   ),
 
                   const SizedBox(height: 30),
@@ -267,6 +273,7 @@ class ExerciseDetailScreen extends StatelessWidget {
   }
 
   Widget _buildStatCard({
+    required BuildContext context,
     required IconData icon,
     required String label,
     required String value,
@@ -274,7 +281,7 @@ class ExerciseDetailScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.cardBackground,
+        color: TC.card(context),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -283,8 +290,8 @@ class ExerciseDetailScreen extends StatelessWidget {
           const SizedBox(height: 8),
           Text(
             value,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: TC.textPrimary(context),
               fontSize: 14,
               fontWeight: FontWeight.bold,
             ),
@@ -292,19 +299,23 @@ class ExerciseDetailScreen extends StatelessWidget {
           const SizedBox(height: 2),
           Text(
             label,
-            style: const TextStyle(color: Colors.white54, fontSize: 11),
+            style: TextStyle(color: TC.textMuted(context), fontSize: 11),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildExerciseRow(ExerciseModel exercise, Color color) {
+  Widget _buildExerciseRow(
+    BuildContext context,
+    ExerciseModel exercise,
+    Color color,
+  ) {
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppColors.cardBackground,
+        color: TC.card(context),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -325,22 +336,22 @@ class ExerciseDetailScreen extends StatelessWidget {
               children: [
                 Text(
                   exercise.name,
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: TC.textPrimary(context),
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
                 Text(
                   '${exercise.sets} sets x ${exercise.reps} reps',
-                  style: const TextStyle(color: Colors.white54, fontSize: 12),
+                  style: TextStyle(color: TC.textMuted(context), fontSize: 12),
                 ),
               ],
             ),
           ),
           Text(
             '${exercise.restSeconds}s rest',
-            style: const TextStyle(color: Colors.white38, fontSize: 12),
+            style: TextStyle(color: TC.textMuted(context), fontSize: 12),
           ),
         ],
       ),

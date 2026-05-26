@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_constants.dart';
+import 'package:provider/provider.dart';
+import '../utils/theme_provider.dart';
+import '../utils/theme_colors.dart';
 
 class ProgressScreen extends StatelessWidget {
   const ProgressScreen({super.key});
@@ -8,7 +11,7 @@ class ProgressScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: TC.background(context),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
@@ -18,10 +21,10 @@ class ProgressScreen extends StatelessWidget {
               const SizedBox(height: 8),
 
               // Header
-              const Text(
+              Text(
                 'Progress',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: TC.textPrimary(context),
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                 ),
@@ -39,6 +42,7 @@ class ProgressScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: _buildSummaryCard(
+                      context: context,
                       icon: Icons.fitness_center,
                       iconColor: AppColors.primary,
                       label: 'Workouts',
@@ -48,6 +52,7 @@ class ProgressScreen extends StatelessWidget {
                   const SizedBox(width: 12),
                   Expanded(
                     child: _buildSummaryCard(
+                      context: context,
                       icon: Icons.local_fire_department,
                       iconColor: AppColors.orange,
                       label: 'Calories',
@@ -57,6 +62,7 @@ class ProgressScreen extends StatelessWidget {
                   const SizedBox(width: 12),
                   Expanded(
                     child: _buildSummaryCard(
+                      context: context,
                       icon: Icons.access_time,
                       iconColor: AppColors.green,
                       label: 'Duration',
@@ -81,6 +87,7 @@ class ProgressScreen extends StatelessWidget {
               const SizedBox(height: 16),
 
               _buildProgressBar(
+                context: context,
                 icon: Icons.fitness_center,
                 iconColor: AppColors.primary,
                 label: 'Workout',
@@ -92,6 +99,7 @@ class ProgressScreen extends StatelessWidget {
               const SizedBox(height: 16),
 
               _buildProgressBar(
+                context: context,
                 icon: Icons.local_fire_department,
                 iconColor: AppColors.orange,
                 label: 'Calories Burn',
@@ -103,6 +111,7 @@ class ProgressScreen extends StatelessWidget {
               const SizedBox(height: 16),
 
               _buildProgressBar(
+                context: context,
                 icon: Icons.directions_walk,
                 iconColor: AppColors.green,
                 label: 'Steps',
@@ -156,6 +165,7 @@ class ProgressScreen extends StatelessWidget {
   }
 
   Widget _buildSummaryCard({
+    required BuildContext context,
     required IconData icon,
     required Color iconColor,
     required String label,
@@ -164,7 +174,7 @@ class ProgressScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.cardBackground,
+        color: TC.card(context),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -192,6 +202,7 @@ class ProgressScreen extends StatelessWidget {
   }
 
   Widget _buildProgressBar({
+    required BuildContext context,
     required IconData icon,
     required Color iconColor,
     required String label,
@@ -202,7 +213,7 @@ class ProgressScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.cardBackground,
+        color: TC.card(context),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -236,7 +247,7 @@ class ProgressScreen extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
             child: LinearProgressIndicator(
               value: percent,
-              backgroundColor: AppColors.timerRingBg,
+              backgroundColor: TC.timerRingBg(context),
               valueColor: AlwaysStoppedAnimation<Color>(color),
               minHeight: 8,
             ),

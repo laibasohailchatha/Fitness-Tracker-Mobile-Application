@@ -5,6 +5,9 @@ import 'package:percent_indicator/percent_indicator.dart';
 import '../models/workout_model.dart';
 import '../utils/app_colors.dart';
 import 'workout_complete_screen.dart';
+import 'package:provider/provider.dart';
+import '../utils/theme_provider.dart';
+import '../utils/theme_colors.dart';
 
 class WorkoutTimerScreen extends StatefulWidget {
   final WorkoutModel workout;
@@ -148,7 +151,7 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
     final double progress = _remainingSeconds / _totalSeconds;
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: TC.background(context),
       body: SafeArea(
         child: Column(
           children: [
@@ -187,8 +190,8 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
 
             Text(
               widget.workout.name,
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: TC.textPrimary(context),
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
               ),
@@ -196,7 +199,7 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
 
             Text(
               'Round ${_currentExerciseIndex + 1} / ${widget.workout.exercises.length}',
-              style: const TextStyle(color: Colors.white54, fontSize: 14),
+              style: TextStyle(color: TC.textMuted(context), fontSize: 14),
             ),
 
             const SizedBox(height: 40),
@@ -228,7 +231,7 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
                 ],
               ),
               progressColor: AppColors.primary,
-              backgroundColor: AppColors.timerRingBg,
+              backgroundColor: TC.timerRingBg(context),
               circularStrokeCap: CircularStrokeCap.round,
             ),
 
@@ -243,7 +246,7 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
                     width: 56,
                     height: 56,
                     decoration: BoxDecoration(
-                      color: AppColors.cardBackground,
+                      color: TC.card(context),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: const Icon(
@@ -281,7 +284,7 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
                     width: 56,
                     height: 56,
                     decoration: BoxDecoration(
-                      color: AppColors.cardBackground,
+                      color: TC.card(context),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: const Icon(
@@ -302,14 +305,20 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   _buildStatItem(
+                    context: context,
                     label: 'Elapsed',
                     value: _formatTime(_elapsedSeconds),
                   ),
                   _buildStatItem(
+                    context: context,
                     label: 'Calories',
                     value: '$_caloriesBurned cal',
                   ),
-                  _buildStatItem(label: 'Heart Rate', value: '$_heartRate bpm'),
+                  _buildStatItem(
+                    context: context,
+                    label: 'Heart Rate',
+                    value: '$_heartRate bpm',
+                  ),
                 ],
               ),
             ),
@@ -319,18 +328,22 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
     );
   }
 
-  Widget _buildStatItem({required String label, required String value}) {
+  Widget _buildStatItem({
+    required BuildContext context,
+    required String label,
+    required String value,
+  }) {
     return Column(
       children: [
         Text(
           label,
-          style: const TextStyle(color: Colors.white54, fontSize: 12),
+          style: TextStyle(color: TC.textMuted(context), fontSize: 12),
         ),
         const SizedBox(height: 4),
         Text(
           value,
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: TC.textPrimary(context),
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),

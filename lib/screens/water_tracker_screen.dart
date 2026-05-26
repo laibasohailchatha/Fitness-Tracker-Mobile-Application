@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_constants.dart';
+import 'package:provider/provider.dart';
+import '../utils/theme_provider.dart';
+import '../utils/theme_colors.dart';
 
 class WaterTrackerScreen extends StatefulWidget {
   const WaterTrackerScreen({super.key});
@@ -30,7 +33,7 @@ class _WaterTrackerScreenState extends State<WaterTrackerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: TC.background(context),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -41,10 +44,10 @@ class _WaterTrackerScreenState extends State<WaterTrackerScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                  Text(
                     'Water Tracker',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: TC.textPrimary(context),
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
@@ -59,15 +62,18 @@ class _WaterTrackerScreenState extends State<WaterTrackerScreen> {
               Center(
                 child: Column(
                   children: [
-                    const Text(
+                    Text(
                       "Today's Goal",
-                      style: TextStyle(color: Colors.white54, fontSize: 14),
+                      style: TextStyle(
+                        color: TC.textMuted(context),
+                        fontSize: 14,
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Text(
                       '$_glassesConsumed / $_dailyGoal Glasses',
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: TC.textPrimary(context),
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
                       ),
@@ -102,7 +108,7 @@ class _WaterTrackerScreenState extends State<WaterTrackerScreen> {
                         decoration: BoxDecoration(
                           color: isFilled
                               ? AppColors.blue.withOpacity(0.3)
-                              : AppColors.cardBackground,
+                              : TC.card(context),
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
                             color: isFilled ? AppColors.blue : Colors.white12,
@@ -177,20 +183,23 @@ class _WaterTrackerScreenState extends State<WaterTrackerScreen> {
                 width: double.infinity,
                 padding: const EdgeInsets.all(20),
                 decoration: BoxDecoration(
-                  color: AppColors.cardBackground,
+                  color: TC.card(context),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
+                    Text(
                       'Total Intake',
-                      style: TextStyle(color: Colors.white54, fontSize: 14),
+                      style: TextStyle(
+                        color: TC.textMuted(context),
+                        fontSize: 14,
+                      ),
                     ),
                     Text(
                       '${_totalLiters.toStringAsFixed(1)} Liters',
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: TC.textPrimary(context),
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),

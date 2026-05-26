@@ -3,6 +3,9 @@ import 'dart:async';
 import '../utils/app_colors.dart';
 import '../utils/app_constants.dart';
 import 'main_screen.dart';
+import 'package:provider/provider.dart';
+import '../utils/theme_provider.dart';
+import '../utils/theme_colors.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -58,7 +61,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: TC.background(context),
       body: Stack(
         fit: StackFit.expand,
         children: [

@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
-import 'utils/app_colors.dart';
+import 'package:provider/provider.dart';
+import 'utils/theme_provider.dart';
 import 'screens/splash_screen.dart';
 
 void main() {
-  runApp(const FitTrackApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: const FitTrackApp(),
+    ),
+  );
 }
 
 class FitTrackApp extends StatelessWidget {
@@ -11,19 +17,14 @@ class FitTrackApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return MaterialApp(
       title: 'FitTrack',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        scaffoldBackgroundColor: AppColors.background,
-        primaryColor: AppColors.primary,
-        colorScheme: ColorScheme.dark(
-          primary: AppColors.primary,
-          surface: AppColors.surfaceColor,
-        ),
-        fontFamily: 'Roboto',
-      ),
+      theme: themeProvider.lightTheme,
+      darkTheme: themeProvider.darkTheme,
+      themeMode: themeProvider.isDarkMode ? ThemeMode.dark : ThemeMode.light,
       home: const SplashScreen(),
     );
   }

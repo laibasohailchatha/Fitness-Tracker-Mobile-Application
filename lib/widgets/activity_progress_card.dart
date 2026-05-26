@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import '../utils/app_colors.dart';
+import 'package:provider/provider.dart';
+import '../utils/theme_provider.dart';
+import '../utils/theme_colors.dart';
 
 class ActivityProgressCard extends StatelessWidget {
   final double percentage;
@@ -27,16 +30,16 @@ class ActivityProgressCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.cardBackground,
+        color: TC.card(context),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             "Today's Activity",
             style: TextStyle(
-              color: Colors.white,
+              color: TC.textPrimary(context),
               fontSize: 16,
               fontWeight: FontWeight.w600,
             ),
@@ -50,14 +53,14 @@ class ActivityProgressCard extends StatelessWidget {
                 percent: percentage,
                 center: Text(
                   '${(percentage * 100).toInt()}%',
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: TC.textPrimary(context),
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 progressColor: AppColors.primary,
-                backgroundColor: AppColors.timerRingBg,
+                backgroundColor: TC.timerRingBg(context),
                 circularStrokeCap: CircularStrokeCap.round,
               ),
               const SizedBox(width: 24),
@@ -65,6 +68,7 @@ class ActivityProgressCard extends StatelessWidget {
                 child: Column(
                   children: [
                     _buildStatRow(
+                      context: context,
                       icon: Icons.local_fire_department,
                       iconColor: AppColors.orange,
                       label: 'Calories',
@@ -72,6 +76,7 @@ class ActivityProgressCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     _buildStatRow(
+                      context: context,
                       icon: Icons.fitness_center,
                       iconColor: AppColors.primary,
                       label: 'Workout',
@@ -79,6 +84,7 @@ class ActivityProgressCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 16),
                     _buildStatRow(
+                      context: context,
                       icon: Icons.directions_walk,
                       iconColor: AppColors.green,
                       label: 'Steps',
@@ -96,6 +102,7 @@ class ActivityProgressCard extends StatelessWidget {
   }
 
   Widget _buildStatRow({
+    required BuildContext context,
     required IconData icon,
     required Color iconColor,
     required String label,
@@ -110,12 +117,12 @@ class ActivityProgressCard extends StatelessWidget {
           children: [
             Text(
               label,
-              style: const TextStyle(color: Colors.white60, fontSize: 11),
+              style: TextStyle(color: TC.textMuted(context), fontSize: 11),
             ),
             Text(
               value,
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: TC.textPrimary(context),
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
               ),

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import '../utils/app_colors.dart';
+import 'package:provider/provider.dart';
+import '../utils/theme_provider.dart';
+import '../utils/theme_colors.dart';
 
 class MotivationalBanner extends StatelessWidget {
   const MotivationalBanner({super.key});
@@ -16,34 +19,38 @@ class MotivationalBanner extends StatelessWidget {
 
     final quote = quotes[DateTime.now().weekday % quotes.length];
 
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: AppColors.primary.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(
-          color: AppColors.primary.withOpacity(0.25),
-          width: 1,
-        ),
-      ),
-      child: Row(
-        children: [
-          const Icon(Icons.format_quote, color: AppColors.primary, size: 28),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Text(
-              quote,
-              style: const TextStyle(
-                color: Colors.white70,
-                fontSize: 13,
-                fontStyle: FontStyle.italic,
-                height: 1.5,
-              ),
+    return Consumer<ThemeProvider>(
+      builder: (context, themeProvider, child) {
+        return Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: TC.primary(context).withOpacity(0.1),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: TC.primary(context).withOpacity(0.25),
+              width: 1,
             ),
           ),
-        ],
-      ),
+          child: Row(
+            children: [
+              Icon(Icons.format_quote, color: TC.primary(context), size: 28),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  quote,
+                  style: TextStyle(
+                    color: TC.textSecondary(context),
+                    fontSize: 13,
+                    fontStyle: FontStyle.italic,
+                    height: 1.5,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

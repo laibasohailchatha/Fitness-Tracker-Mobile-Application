@@ -5,6 +5,9 @@ import '../widgets/activity_progress_card.dart';
 import '../widgets/quick_actions_row.dart';
 import '../widgets/todays_workout_card.dart';
 import '../widgets/motivational_banner.dart';
+import 'package:provider/provider.dart';
+import '../utils/theme_provider.dart';
+import '../utils/theme_colors.dart';
 
 class HomeTab extends StatefulWidget {
   final Function(int) onSwitchTab;
@@ -42,7 +45,7 @@ class _HomeTabState extends State<HomeTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: TC.background(context),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -102,44 +105,77 @@ class _HomeTabState extends State<HomeTab> {
   }
 
   Widget _buildTopBar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return Consumer<ThemeProvider>(
+      builder: (context, themeProvider, child) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              _getGreeting(),
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  _getGreeting(),
+                  style: TextStyle(
+                    color: TC.textPrimary(context),
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'Ready to crush your goals today?',
+                  style: TextStyle(
+                    color: TC.textSecondary(context),
+                    fontSize: 14,
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 4),
-            Text(
-              'Ready to crush your goals today?',
-              style: TextStyle(
-                color: Colors.white.withOpacity(0.6),
-                fontSize: 14,
-              ),
+            Row(
+              children: [
+                // Theme toggle button
+                GestureDetector(
+                  onTap: () {
+                    themeProvider.toggleTheme();
+                  },
+                  child: Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: TC.card(context),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Icon(
+                      themeProvider.isDarkMode
+                          ? Icons.light_mode_outlined
+                          : Icons.dark_mode_outlined,
+                      color: themeProvider.isDarkMode
+                          ? AppColors.yellow
+                          : AppColors.lightPrimary,
+                      size: 22,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                // Notification button
+                Container(
+                  width: 44,
+                  height: 44,
+                  decoration: BoxDecoration(
+                    color: TC.card(context),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Icon(
+                    Icons.notifications_outlined,
+                    color: TC.textSecondary(context),
+                    size: 22,
+                  ),
+                ),
+              ],
             ),
           ],
-        ),
-        Container(
-          width: 44,
-          height: 44,
-          decoration: BoxDecoration(
-            color: AppColors.cardBackground,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: const Icon(
-            Icons.notifications_outlined,
-            color: Colors.white70,
-            size: 22,
-          ),
-        ),
-      ],
+        );
+      },
     );
   }
 }

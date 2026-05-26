@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import '../models/workout_model.dart';
@@ -20,9 +21,12 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
   bool _isRunning = false;
   Timer? _timer;
   Timer? _elapsedTimer;
+  Timer? _heartRateTimer;
   int _currentExerciseIndex = 0;
   int _caloriesBurned = 0;
   int _elapsedSeconds = 0;
+  int _heartRate = 80;
+  final Random _random = Random();
 
   ExerciseModel get _currentExercise {
     return widget.workout.exercises[_currentExerciseIndex];
@@ -33,12 +37,24 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
     super.initState();
     _totalSeconds = _currentExercise.restSeconds;
     _remainingSeconds = _totalSeconds;
+    _heartRate = 75 + _random.nextInt(21);
+  }
+
+  void _startHeartRateTimer() {
+    _heartRateTimer?.cancel();
+    _heartRateTimer = Timer.periodic(const Duration(seconds: 7), (t) {
+      setState(() {
+        _heartRate = 75 + _random.nextInt(21);
+      });
+    });
   }
 
   void _startTimer() {
     setState(() {
       _isRunning = true;
     });
+
+    _startHeartRateTimer();
 
     _timer = Timer.periodic(const Duration(seconds: 1), (t) {
       if (_remainingSeconds > 0) {
@@ -66,6 +82,7 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
   void _pauseTimer() {
     _timer?.cancel();
     _elapsedTimer?.cancel();
+    _heartRateTimer?.cancel();
     setState(() {
       _isRunning = false;
     });
@@ -74,6 +91,7 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
   void _nextExercise() {
     _timer?.cancel();
     _elapsedTimer?.cancel();
+    _heartRateTimer?.cancel();
     if (_currentExerciseIndex < widget.workout.exercises.length - 1) {
       setState(() {
         _currentExerciseIndex++;
@@ -99,6 +117,7 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
   void _previousExercise() {
     _timer?.cancel();
     _elapsedTimer?.cancel();
+    _heartRateTimer?.cancel();
     if (_currentExerciseIndex > 0) {
       setState(() {
         _currentExerciseIndex--;
@@ -120,6 +139,7 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
   void dispose() {
     _timer?.cancel();
     _elapsedTimer?.cancel();
+    _heartRateTimer?.cancel();
     super.dispose();
   }
 
@@ -289,7 +309,7 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
                     label: 'Calories',
                     value: '$_caloriesBurned cal',
                   ),
-                  _buildStatItem(label: 'Heart Rate', value: '78 bpm'),
+                  _buildStatItem(label: 'Heart Rate', value: '$_heartRate bpm'),
                 ],
               ),
             ),

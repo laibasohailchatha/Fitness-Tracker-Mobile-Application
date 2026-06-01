@@ -2,11 +2,12 @@ import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:provider/provider.dart';
+import '../utils/theme_provider.dart';
+import '../utils/theme_colors.dart';
 import '../models/workout_model.dart';
 import '../utils/app_colors.dart';
 import 'workout_complete_screen.dart';
-import 'package:provider/provider.dart';
-import '../utils/theme_provider.dart';
 import '../utils/theme_colors.dart';
 
 class WorkoutTimerScreen extends StatefulWidget {
@@ -150,181 +151,182 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
   Widget build(BuildContext context) {
     final double progress = _remainingSeconds / _totalSeconds;
 
-    return Scaffold(
-      backgroundColor: TC.background(context),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-              child: Row(
-                children: [
-                  GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: const Icon(
-                      Icons.arrow_back,
-                      color: Colors.white,
-                      size: 24,
-                    ),
+    return Consumer<ThemeProvider>(
+      builder: (context, themeProvider, child) {
+        return Scaffold(
+          backgroundColor: TC.background(context),
+          body: SafeArea(
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 16,
                   ),
-                  const Expanded(
-                    child: Center(
-                      child: Text(
-                        'Workout Timer',
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () => Navigator.pop(context),
+                        child: Icon(
+                          Icons.arrow_back,
+                          color: TC.textPrimary(context),
+                          size: 24,
+                        ),
+                      ),
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            'Workout Timer',
+                            style: TextStyle(
+                              color: TC.textPrimary(context),
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Icon(
+                        Icons.music_note_outlined,
+                        color: TC.textMuted(context),
+                        size: 24,
+                      ),
+                    ],
+                  ),
+                ),
+                Text(
+                  widget.workout.name,
+                  style: TextStyle(
+                    color: TC.textPrimary(context),
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  'Round ${_currentExerciseIndex + 1} / ${widget.workout.exercises.length}',
+                  style: TextStyle(color: TC.textMuted(context), fontSize: 14),
+                ),
+                const SizedBox(height: 40),
+                CircularPercentIndicator(
+                  radius: 130,
+                  lineWidth: 12,
+                  percent: progress.clamp(0.0, 1.0),
+                  center: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Exercise',
                         style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
+                          color: TC.textMuted(context),
+                          fontSize: 13,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        _formatTime(_remainingSeconds),
+                        style: TextStyle(
+                          color: TC.textPrimary(context),
+                          fontSize: 48,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        _currentExercise.name,
+                        style: TextStyle(
+                          color: TC.textSecondary(context),
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                  progressColor: TC.primary(context),
+                  backgroundColor: TC.timerRingBg(context),
+                  circularStrokeCap: CircularStrokeCap.round,
+                ),
+                const SizedBox(height: 48),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: _previousExercise,
+                      child: Container(
+                        width: 56,
+                        height: 56,
+                        decoration: BoxDecoration(
+                          color: TC.card(context),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Icon(
+                          Icons.skip_previous,
+                          color: TC.textPrimary(context),
+                          size: 28,
                         ),
                       ),
                     ),
-                  ),
-                  const Icon(
-                    Icons.music_note_outlined,
-                    color: Colors.white54,
-                    size: 24,
-                  ),
-                ],
-              ),
-            ),
-
-            Text(
-              widget.workout.name,
-              style: TextStyle(
-                color: TC.textPrimary(context),
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-
-            Text(
-              'Round ${_currentExerciseIndex + 1} / ${widget.workout.exercises.length}',
-              style: TextStyle(color: TC.textMuted(context), fontSize: 14),
-            ),
-
-            const SizedBox(height: 40),
-
-            CircularPercentIndicator(
-              radius: 130,
-              lineWidth: 12,
-              percent: progress.clamp(0.0, 1.0),
-              center: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Exercise',
-                    style: TextStyle(color: Colors.white54, fontSize: 13),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    _formatTime(_remainingSeconds),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 48,
-                      fontWeight: FontWeight.bold,
+                    const SizedBox(width: 20),
+                    GestureDetector(
+                      onTap: _isRunning ? _pauseTimer : _startTimer,
+                      child: Container(
+                        width: 72,
+                        height: 72,
+                        decoration: BoxDecoration(
+                          color: TC.primary(context),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Icon(
+                          _isRunning ? Icons.pause : Icons.play_arrow,
+                          color: Colors.white,
+                          size: 36,
+                        ),
+                      ),
                     ),
-                  ),
-                  Text(
-                    _currentExercise.name,
-                    style: const TextStyle(color: Colors.white70, fontSize: 14),
-                  ),
-                ],
-              ),
-              progressColor: AppColors.primary,
-              backgroundColor: TC.timerRingBg(context),
-              circularStrokeCap: CircularStrokeCap.round,
-            ),
-
-            const SizedBox(height: 48),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: _previousExercise,
-                  child: Container(
-                    width: 56,
-                    height: 56,
-                    decoration: BoxDecoration(
-                      color: TC.card(context),
-                      borderRadius: BorderRadius.circular(16),
+                    const SizedBox(width: 20),
+                    GestureDetector(
+                      onTap: _nextExercise,
+                      child: Container(
+                        width: 56,
+                        height: 56,
+                        decoration: BoxDecoration(
+                          color: TC.card(context),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Icon(
+                          Icons.skip_next,
+                          color: TC.textPrimary(context),
+                          size: 28,
+                        ),
+                      ),
                     ),
-                    child: const Icon(
-                      Icons.skip_previous,
-                      color: Colors.white,
-                      size: 28,
-                    ),
-                  ),
+                  ],
                 ),
-
-                const SizedBox(width: 20),
-
-                GestureDetector(
-                  onTap: _isRunning ? _pauseTimer : _startTimer,
-                  child: Container(
-                    width: 72,
-                    height: 72,
-                    decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Icon(
-                      _isRunning ? Icons.pause : Icons.play_arrow,
-                      color: Colors.white,
-                      size: 36,
-                    ),
-                  ),
-                ),
-
-                const SizedBox(width: 20),
-
-                GestureDetector(
-                  onTap: _nextExercise,
-                  child: Container(
-                    width: 56,
-                    height: 56,
-                    decoration: BoxDecoration(
-                      color: TC.card(context),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: const Icon(
-                      Icons.skip_next,
-                      color: Colors.white,
-                      size: 28,
-                    ),
+                const SizedBox(height: 40),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _buildStatItem(
+                        context: context,
+                        label: 'Elapsed',
+                        value: _formatTime(_elapsedSeconds),
+                      ),
+                      _buildStatItem(
+                        context: context,
+                        label: 'Calories',
+                        value: '$_caloriesBurned kcal',
+                      ),
+                      _buildStatItem(
+                        context: context,
+                        label: 'Heart Rate',
+                        value: '$_heartRate bpm',
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
-
-            const SizedBox(height: 40),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _buildStatItem(
-                    context: context,
-                    label: 'Elapsed',
-                    value: _formatTime(_elapsedSeconds),
-                  ),
-                  _buildStatItem(
-                    context: context,
-                    label: 'Calories',
-                    value: '$_caloriesBurned cal',
-                  ),
-                  _buildStatItem(
-                    context: context,
-                    label: 'Heart Rate',
-                    value: '$_heartRate bpm',
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 

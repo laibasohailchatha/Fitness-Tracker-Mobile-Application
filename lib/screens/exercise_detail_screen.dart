@@ -29,228 +29,206 @@ class ExerciseDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final exercise = workout.exercises.first;
-    final color = _getCategoryColor(workout.category);
+    return Consumer<ThemeProvider>(
+      builder: (context, themeProvider, child) {
+        final exercise = workout.exercises.first;
+        final color = _getCategoryColor(workout.category);
 
-    return Scaffold(
-      backgroundColor: TC.background(context),
-      body: Column(
-        children: [
-          // Top image area
-          Stack(
+        return Scaffold(
+          backgroundColor: TC.background(context),
+          body: Column(
             children: [
-              ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(0),
-                  bottomRight: Radius.circular(0),
-                ),
-                child: Image.asset(
-                  workout.imagePath,
-                  width: double.infinity,
-                  height: 280,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return Container(
+              Stack(
+                children: [
+                  ClipRRect(
+                    child: Image.asset(
+                      workout.imagePath,
                       width: double.infinity,
                       height: 280,
-                      color: color.withOpacity(0.15),
-                      child: Icon(
-                        Icons.fitness_center,
-                        size: 120,
-                        color: color.withOpacity(0.4),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              // Dark overlay so back button is visible
-              Container(
-                width: double.infinity,
-                height: 280,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.black.withOpacity(0.4),
-                      Colors.transparent,
-                      Colors.black.withOpacity(0.6),
-                    ],
-                  ),
-                ),
-              ),
-
-              // Back button
-              Positioned(
-                top: 50,
-                left: 16,
-                child: GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: Colors.black45,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: const Icon(
-                      Icons.arrow_back,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                  ),
-                ),
-              ),
-
-              // Favourite button
-              Positioned(
-                top: 50,
-                right: 16,
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: Colors.black45,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Icon(
-                    Icons.favorite_border,
-                    color: Colors.white,
-                    size: 20,
-                  ),
-                ),
-              ),
-            ],
-          ),
-
-          // Content
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Title and tags
-                  Text(
-                    exercise.name,
-                    style: TextStyle(
-                      color: TC.textPrimary(context),
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-
-                  const SizedBox(height: 10),
-
-                  Row(
-                    children: [
-                      _buildTag(workout.category, color),
-                      const SizedBox(width: 8),
-                      _buildTag(exercise.muscleGroup, Colors.white30),
-                    ],
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  // Description
-                  Text(
-                    exercise.description,
-                    style: TextStyle(
-                      color: TC.textMuted(context),
-                      fontSize: 14,
-                      height: 1.6,
-                    ),
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  // Stats row
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _buildStatCard(
-                          context: context,
-                          icon: Icons.repeat,
-                          label: 'Sets',
-                          value: '${exercise.sets} Sets',
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: _buildStatCard(
-                          context: context,
-                          icon: Icons.fitness_center,
-                          label: 'Reps',
-                          value: '${exercise.reps} Reps',
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: _buildStatCard(
-                          context: context,
-                          icon: Icons.timer,
-                          label: 'Rest',
-                          value: '${exercise.restSeconds} sec',
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  // All exercises in this workout
-                  Text(
-                    'Exercises in this workout',
-                    style: TextStyle(
-                      color: TC.textPrimary(context),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-
-                  const SizedBox(height: 12),
-
-                  ...workout.exercises.map(
-                    (ex) => _buildExerciseRow(context, ex, color),
-                  ),
-
-                  const SizedBox(height: 30),
-
-                  // Start workout button
-                  SizedBox(
-                    width: double.infinity,
-                    height: 56,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          SlidePageRoute(
-                            page: WorkoutTimerScreen(workout: workout),
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          width: double.infinity,
+                          height: 280,
+                          color: color.withOpacity(0.15),
+                          child: Icon(
+                            Icons.fitness_center,
+                            size: 120,
+                            color: color.withOpacity(0.4),
                           ),
                         );
                       },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    height: 280,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.black.withOpacity(0.4),
+                          Colors.transparent,
+                          Colors.black.withOpacity(0.6),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 50,
+                    left: 16,
+                    child: GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: Colors.black45,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: const Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                          size: 20,
                         ),
                       ),
-                      child: const Text(
-                        'Start Workout',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 50,
+                    right: 16,
+                    child: Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: Colors.black45,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Icon(
+                        Icons.favorite_border,
+                        color: Colors.white,
+                        size: 20,
                       ),
                     ),
                   ),
                 ],
               ),
-            ),
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        exercise.name,
+                        style: TextStyle(
+                          color: TC.textPrimary(context),
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          _buildTag(workout.category, color),
+                          const SizedBox(width: 8),
+                          _buildTag(
+                            exercise.muscleGroup,
+                            TC.textMuted(context),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        exercise.description,
+                        style: TextStyle(
+                          color: TC.textMuted(context),
+                          fontSize: 14,
+                          height: 1.6,
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _buildStatCard(
+                              context: context,
+                              icon: Icons.repeat,
+                              label: 'Sets',
+                              value: '${exercise.sets} Sets',
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: _buildStatCard(
+                              context: context,
+                              icon: Icons.fitness_center,
+                              label: 'Reps',
+                              value: '${exercise.reps} Reps',
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: _buildStatCard(
+                              context: context,
+                              icon: Icons.timer,
+                              label: 'Rest',
+                              value: '${exercise.restSeconds} sec',
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 24),
+                      Text(
+                        'Exercises in this workout',
+                        style: TextStyle(
+                          color: TC.textPrimary(context),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      ...workout.exercises.map(
+                        (ex) => _buildExerciseRow(context, ex, color),
+                      ),
+                      const SizedBox(height: 30),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 56,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              SlidePageRoute(
+                                page: WorkoutTimerScreen(workout: workout),
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: TC.primary(context),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                          ),
+                          child: const Text(
+                            'Start Workout',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -258,7 +236,7 @@ class ExerciseDetailScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.15),
+        color: color.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Text(
@@ -324,7 +302,7 @@ class ExerciseDetailScreen extends StatelessWidget {
             width: 36,
             height: 36,
             decoration: BoxDecoration(
-              color: color.withOpacity(0.15),
+              color: color.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Icon(Icons.fitness_center, color: color, size: 18),

@@ -26,114 +26,110 @@ class WorkoutCompleteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: TC.background(context),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Trophy icon
-              Container(
-                width: 120,
-                height: 120,
-                decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.15),
-                  shape: BoxShape.circle,
-                  border: Border.all(color: AppColors.primary, width: 2),
-                ),
-                child: const Icon(
-                  Icons.emoji_events,
-                  color: AppColors.yellow,
-                  size: 60,
-                ),
-              ),
-
-              const SizedBox(height: 28),
-
-              Text(
-                'Workout Complete!',
-                style: TextStyle(
-                  color: TC.textPrimary(context),
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-
-              const SizedBox(height: 8),
-
-              Text(
-                workout.name,
-                style: TextStyle(color: TC.textMuted(context), fontSize: 16),
-              ),
-
-              const SizedBox(height: 40),
-
-              // Stats row
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Consumer<ThemeProvider>(
+      builder: (context, themeProvider, child) {
+        return Scaffold(
+          backgroundColor: TC.background(context),
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  _buildStat(
-                    context: context,
-                    icon: Icons.local_fire_department,
-                    color: AppColors.orange,
-                    value: '$caloriesBurned',
-                    label: 'Calories',
-                  ),
-                  _buildStat(
-                    context: context,
-                    icon: Icons.access_time,
-                    color: AppColors.primary,
-                    value: _formatTime(elapsedSeconds),
-                    label: 'Duration',
-                  ),
-                  _buildStat(
-                    context: context,
-                    icon: Icons.fitness_center,
-                    color: AppColors.green,
-                    value: '${workout.exercises.length}',
-                    label: 'Exercises',
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 48),
-
-              // Back to home button
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MainScreen(),
-                      ),
-                      (route) => false,
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+                  Container(
+                    width: 120,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      color: TC.primary(context).withOpacity(0.15),
+                      shape: BoxShape.circle,
+                      border: Border.all(color: TC.primary(context), width: 2),
+                    ),
+                    child: const Icon(
+                      Icons.emoji_events,
+                      color: AppColors.yellow,
+                      size: 60,
                     ),
                   ),
-                  child: const Text(
-                    'Back to Home',
+                  const SizedBox(height: 28),
+                  Text(
+                    'Workout Complete!',
                     style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
+                      color: TC.textPrimary(context),
+                      fontSize: 28,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
+                  const SizedBox(height: 8),
+                  Text(
+                    workout.name,
+                    style: TextStyle(
+                      color: TC.textMuted(context),
+                      fontSize: 16,
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      _buildStat(
+                        context: context,
+                        icon: Icons.local_fire_department,
+                        color: AppColors.orange,
+                        value: '$caloriesBurned kcal',
+                        label: 'Calories',
+                      ),
+                      _buildStat(
+                        context: context,
+                        icon: Icons.access_time,
+                        color: TC.primary(context),
+                        value: _formatTime(elapsedSeconds),
+                        label: 'Duration',
+                      ),
+                      _buildStat(
+                        context: context,
+                        icon: Icons.fitness_center,
+                        color: AppColors.green,
+                        value: '${workout.exercises.length}',
+                        label: 'Exercises',
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 48),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 56,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MainScreen(),
+                          ),
+                          (route) => false,
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: TC.primary(context),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+                      child: const Text(
+                        'Back to Home',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -150,7 +146,7 @@ class WorkoutCompleteScreen extends StatelessWidget {
           width: 64,
           height: 64,
           decoration: BoxDecoration(
-            color: color.withOpacity(0.15),
+            color: color.withValues(alpha: 0.15),
             borderRadius: BorderRadius.circular(16),
           ),
           child: Icon(icon, color: color, size: 28),

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import '../utils/app_colors.dart';
-import 'package:provider/provider.dart';
-import '../utils/theme_provider.dart';
 import '../utils/theme_colors.dart';
 
 class ActivityProgressCard extends StatelessWidget {
@@ -72,7 +70,7 @@ class ActivityProgressCard extends StatelessWidget {
                       icon: Icons.local_fire_department,
                       iconColor: AppColors.orange,
                       label: 'Calories',
-                      value: '$calories / $calorieGoal kcal',
+                      value: '$calories / $calorieGoal cal',
                     ),
                     const SizedBox(height: 16),
                     _buildStatRow(

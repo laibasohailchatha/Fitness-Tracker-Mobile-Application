@@ -175,8 +175,8 @@ class ProgressScreen extends StatelessWidget {
           Text(
             value,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: Colors.white,
+            style: TextStyle(
+              color: TC.textPrimary(context),
               fontSize: 16,
               fontWeight: FontWeight.bold,
               height: 1.3,
@@ -185,7 +185,7 @@ class ProgressScreen extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             label,
-            style: const TextStyle(color: Colors.white54, fontSize: 11),
+            style: TextStyle(color: TC.textMuted(context), fontSize: 11),
           ),
         ],
       ),
@@ -216,8 +216,8 @@ class ProgressScreen extends StatelessWidget {
               Expanded(
                 child: Text(
                   label,
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: TC.textPrimary(context),
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
                   ),
@@ -248,7 +248,7 @@ class ProgressScreen extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Text(
               detail,
-              style: const TextStyle(color: Colors.white38, fontSize: 12),
+              style: TextStyle(color: TC.textMuted(context), fontSize: 12),
             ),
           ),
         ],

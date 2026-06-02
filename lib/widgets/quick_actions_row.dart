@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import '../utils/app_colors.dart';
+import 'package:provider/provider.dart';
+import '../utils/theme_provider.dart';
+import '../utils/theme_colors.dart';
 
 class QuickActionsRow extends StatelessWidget {
   final VoidCallback onWorkoutTap;
@@ -20,10 +23,10 @@ class QuickActionsRow extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           'Quick Actions',
           style: TextStyle(
-            color: Colors.white,
+            color: TC.textPrimary(context),
             fontSize: 16,
             fontWeight: FontWeight.w600,
           ),
@@ -33,24 +36,28 @@ class QuickActionsRow extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _buildActionButton(
+              context: context,
               icon: Icons.fitness_center,
               label: 'Workout',
               color: AppColors.primary,
               onTap: onWorkoutTap,
             ),
             _buildActionButton(
+              context: context,
               icon: Icons.timer,
               label: 'Timer',
               color: AppColors.orange,
               onTap: onTimerTap,
             ),
             _buildActionButton(
+              context: context,
               icon: Icons.water_drop,
               label: 'Water',
               color: AppColors.blue,
               onTap: onWaterTap,
             ),
             _buildActionButton(
+              context: context,
               icon: Icons.bar_chart,
               label: 'Progress',
               color: AppColors.green,
@@ -63,6 +70,7 @@ class QuickActionsRow extends StatelessWidget {
   }
 
   Widget _buildActionButton({
+    required BuildContext context,
     required IconData icon,
     required String label,
     required Color color,
@@ -76,16 +84,16 @@ class QuickActionsRow extends StatelessWidget {
             width: 64,
             height: 64,
             decoration: BoxDecoration(
-              color: color.withOpacity(0.15),
+              color: color.withValues(alpha: 0.15),
               borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: color.withOpacity(0.3), width: 1),
+              border: Border.all(color: color.withValues(alpha: 0.3), width: 1),
             ),
             child: Icon(icon, color: color, size: 28),
           ),
           const SizedBox(height: 8),
           Text(
             label,
-            style: const TextStyle(color: Colors.white70, fontSize: 12),
+            style: TextStyle(color: TC.textSecondary(context), fontSize: 12),
           ),
         ],
       ),

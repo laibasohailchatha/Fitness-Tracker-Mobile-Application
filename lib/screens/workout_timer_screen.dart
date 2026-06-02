@@ -312,7 +312,7 @@ class _WorkoutTimerScreenState extends State<WorkoutTimerScreen> {
                       _buildStatItem(
                         context: context,
                         label: 'Calories',
-                        value: '$_caloriesBurned kcal',
+                        value: '$_caloriesBurned cal',
                       ),
                       _buildStatItem(
                         context: context,

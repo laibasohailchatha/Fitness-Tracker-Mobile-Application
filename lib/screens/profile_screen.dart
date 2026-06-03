@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../utils/app_colors.dart';
 import '../utils/theme_provider.dart';
 import '../utils/theme_colors.dart';
+import 'bmi_calculator_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -235,7 +236,41 @@ class ProfileScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 52,
+                      child: ElevatedButton.icon(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const BmiCalculatorScreen(),
+                            ),
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.calculate_outlined,
+                          color: Colors.white,
+                        ),
+                        label: const Text(
+                          'BMI Calculator',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: TC.primary(context),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(14),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: 24),
                 ],
               ),

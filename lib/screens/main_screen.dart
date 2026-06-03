@@ -8,6 +8,7 @@ import 'home_screen.dart';
 import 'workout_categories_screen.dart';
 import 'progress_screen.dart';
 import 'water_tracker_screen.dart';
+import 'profile_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -34,6 +35,7 @@ class _MainScreenState extends State<MainScreen> {
           const WorkoutCategoriesScreen(),
           const WaterTrackerScreen(),
           const ProgressScreen(),
+          const ProfileScreen(),
         ];
 
         return Scaffold(

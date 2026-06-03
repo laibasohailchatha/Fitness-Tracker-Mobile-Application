@@ -60,6 +60,11 @@ class BottomNavBar extends StatelessWidget {
                 activeIcon: Icon(Icons.bar_chart),
                 label: 'Progress',
               ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person_outline),
+                activeIcon: Icon(Icons.person),
+                label: 'Profile',
+              ),
             ],
           ),
         );

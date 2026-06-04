@@ -8,6 +8,7 @@ import '../widgets/motivational_banner.dart';
 import 'package:provider/provider.dart';
 import '../utils/theme_provider.dart';
 import '../utils/theme_colors.dart';
+import 'notifications_screen.dart';
 
 class HomeTab extends StatefulWidget {
   final Function(int) onSwitchTab;
@@ -157,18 +158,29 @@ class _HomeTabState extends State<HomeTab> {
                   ),
                 ),
                 const SizedBox(width: 10),
+
                 // Notification button
-                Container(
-                  width: 44,
-                  height: 44,
-                  decoration: BoxDecoration(
-                    color: TC.card(context),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Icon(
-                    Icons.notifications_outlined,
-                    color: TC.textSecondary(context),
-                    size: 22,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const NotificationsScreen(),
+                      ),
+                    );
+                  },
+                  child: Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: TC.card(context),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Icon(
+                      Icons.notifications_outlined,
+                      color: TC.textSecondary(context),
+                      size: 22,
+                    ),
                   ),
                 ),
               ],
